@@ -1,15 +1,17 @@
 import { Link } from 'react-router'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
+import { Mark } from '../components/Logo'
 
 export default function NotFound() {
-  useDocumentMeta('Page not found', 'This page has drifted off into the sunset.')
+  useDocumentMeta('Page not found', 'This page has melted into the skin.')
   return (
-    <section className="container-page flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-      <p className="eyebrow">404</p>
-      <h1 className="mt-3 text-5xl">This page drifted into the sunset</h1>
-      <p className="mt-4 text-ink-soft">The link may be broken, or the page may have moved.</p>
-      <Link to="/" className="btn-primary mt-8">
-        Back to home
+    <section className="container-page flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
+      <Mark className="h-16 w-16" title="" />
+      <p className="label mt-8 text-ink-soft">404</p>
+      <h1 className="display mt-4 text-display-l">This page disappeared into the skin.</h1>
+      <p className="mt-5 text-ink-soft">The link may be broken, or the page may have moved.</p>
+      <Link to="/" className="btn-ink mt-10">
+        Back to Haluna
       </Link>
     </section>
   )

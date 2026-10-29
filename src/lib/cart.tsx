@@ -49,16 +49,26 @@ function loadCart(): CartLine[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [raw, setRaw] = useState<CartLine[]>(loadCart)
+  // Start empty on both server and client so the prerendered home page hydrates cleanly,
+  // then restore the saved cart right after mount.
+  const [raw, setRaw] = useState<CartLine[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const [restored, setRestored] = useState(false)
 
   useEffect(() => {
+    setRaw(loadCart())
+    setRestored(true)
+  }, [])
+
+  // Save only after the restore has rendered, so the empty first render never overwrites storage.
+  useEffect(() => {
+    if (!restored) return
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(raw))
     } catch {
       /* storage unavailable (private mode): cart still works for this visit */
     }
-  }, [raw])
+  }, [raw, restored])
 
   const add = useCallback((slug: string, shadeId?: string, quantity = 1) => {
     setRaw((prev) => {

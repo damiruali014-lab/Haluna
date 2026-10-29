@@ -1,0 +1,138 @@
+{
+  "collection-banner": {
+    "w": 2400,
+    "h": 1357,
+    "sizes": [
+      480,
+      800,
+      1200,
+      1600
+    ]
+  },
+  "hero-tube": {
+    "w": 1600,
+    "h": 2000,
+    "sizes": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "lifestyle-1": {
+    "w": 1440,
+    "h": 1800,
+    "sizes": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "lifestyle-2": {
+    "w": 1440,
+    "h": 1800,
+    "sizes": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "lifestyle-3": {
+    "w": 1440,
+    "h": 1800,
+    "sizes": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "product-aftersun": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-blush-dusk": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-blush-ember": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-blush-petal": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-liptint": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-stick": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-sunscreen": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-tint-deep": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-tint-light": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "product-tint-medium": {
+    "w": 1200,
+    "h": 1200,
+    "sizes": [
+      480,
+      800
+    ]
+  },
+  "texture-cream": {
+    "w": 2400,
+    "h": 1357,
+    "sizes": [
+      480,
+      800,
+      1200,
+      1600
+    ]
+  }
+}

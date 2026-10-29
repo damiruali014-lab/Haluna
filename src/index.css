@@ -1,108 +1,109 @@
 @import 'tailwindcss';
-
-/* Brand tokens. Change these to re-skin the whole store. */
-@theme {
-  --color-cream: #fbf7f1;
-  --color-sand: #eadfcf;
-  --color-sand-soft: #f4ede3;
-  --color-sun: #f28c4b; /* primary accent: backgrounds only, pair with brown text */
-  --color-sun-deep: #a84c14; /* orange for text on light backgrounds (5.3:1) */
-  --color-sun-soft: #fbe3d2;
-  --color-ink: #2b1e16;
-  --color-ink-soft: #6b5a4e; /* secondary text (6.1:1 on cream) */
-  --color-sage: #a9b8a0;
-  --color-sage-deep: #4f6047;
-  --color-sage-soft: #e3e9dd;
-
-  --font-display: 'Fraunces', ui-serif, Georgia, serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-
-  --radius-card: 1.25rem;
-  --radius-panel: 1.5rem;
-
-  --shadow-soft: 0 1px 2px rgb(43 30 22 / 0.04), 0 8px 24px -8px rgb(43 30 22 / 0.1);
-  --shadow-lift: 0 2px 4px rgb(43 30 22 / 0.04), 0 20px 40px -12px rgb(43 30 22 / 0.18);
-
-  --animate-fade-in: fade-in 0.4s ease both;
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
-}
+@import './styles/tokens.css';
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
   body {
-    @apply bg-cream font-sans text-ink antialiased;
+    @apply bg-bone font-sans text-ink antialiased;
     overflow-x: clip;
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
+    font-weight: 350;
+    font-stretch: 82%;
     font-optical-sizing: auto;
-    font-weight: 400;
-    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   :focus-visible {
-    outline: 2px solid var(--color-sun-deep);
+    outline: 2px solid var(--color-ink);
     outline-offset: 3px;
     border-radius: 6px;
   }
+  .on-dusk :focus-visible {
+    outline-color: var(--color-bone);
+  }
   ::selection {
-    background: var(--color-sun-soft);
+    background: var(--color-blush);
+    color: var(--color-ink);
   }
 }
 
 @utility container-page {
-  @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8;
-}
-@utility eyebrow {
-  @apply text-xs font-semibold tracking-[0.18em] text-sun-deep uppercase;
-}
-@utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-50;
-}
-@utility btn-primary {
-  @apply btn bg-sun text-ink shadow-soft hover:-translate-y-0.5 hover:bg-[#f49a5f] hover:shadow-lift active:translate-y-0;
-}
-@utility btn-dark {
-  @apply btn bg-ink text-cream hover:-translate-y-0.5 hover:bg-[#3d2c21] hover:shadow-lift active:translate-y-0;
-}
-@utility btn-ghost {
-  @apply btn border border-ink/15 bg-white/60 text-ink backdrop-blur hover:border-ink/40 hover:bg-white;
-}
-@utility card {
-  @apply rounded-card bg-white shadow-soft;
-}
-@utility input {
-  @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink transition placeholder:text-ink-soft/70 focus:border-sun-deep focus:ring-2 focus:ring-sun/30 focus:outline-none;
+  @apply mx-auto w-full max-w-[1480px] px-5 sm:px-8 xl:px-12;
 }
 
-/* Subtle film grain used on hero and feature panels. */
-.grain::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.12 0 0 0 0 0.09 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Small uppercase label, mirrors the packaging capitals. */
+@utility label {
+  @apply font-sans text-label font-medium uppercase;
+}
+
+/* Widely tracked thin capitals, set vertically like the print on the tube. */
+@utility vertical-caps {
+  writing-mode: vertical-rl;
+  @apply font-sans font-light tracking-[0.6em] uppercase;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 330;
+  font-stretch: 78%;
+  text-wrap: balance;
+}
+
+@utility btn {
+  @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-semibold tracking-wide transition-[transform,background-color,color,box-shadow,border-color] duration-[var(--dur-fast)] ease-[var(--ease-out)] select-none active:scale-x-[0.97] active:scale-y-[0.92] disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-ink {
+  @apply btn bg-ink text-bone;
+}
+@utility btn-line {
+  @apply btn border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-bone;
+}
+@utility btn-bone {
+  @apply btn bg-bone text-ink;
+}
+@utility card {
+  @apply rounded-card bg-sand;
+}
+@utility input {
+  @apply w-full rounded-sm border border-ink/20 bg-bone px-4 py-3.5 text-[15px] text-ink transition placeholder:text-ink-soft/80 focus:border-ink focus:ring-2 focus:ring-ink/15 focus:outline-none;
+}
+@utility rounded-arch {
+  border-radius: 999px 999px var(--radius-panel) var(--radius-panel);
+}
+
+/* Gooey button internals (see GooButton.tsx). */
+.goo-layer {
+  filter: url('#hl-goo');
+}
+.goo-blob {
+  transition:
+    transform 0.55s var(--ease-cream),
+    opacity var(--dur-fast) ease;
 }
 
 /* Scroll reveal: elements start hidden only when JS has marked them. */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
   transition:
-    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal.is-visible {
@@ -110,8 +111,33 @@
   transform: none;
 }
 
+/* Custom cream-drop cursor (fine pointers only, see CreamCursor.tsx). */
+html.has-cream-cursor,
+html.has-cream-cursor a,
+html.has-cream-cursor button,
+html.has-cream-cursor label {
+  cursor: none;
+}
+html.has-cream-cursor input,
+html.has-cream-cursor textarea,
+html.has-cream-cursor select {
+  cursor: auto;
+}
+
+@keyframes marquee-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.marquee-down {
+  animation: marquee-down 40s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:not(.lenis) {
     scroll-behavior: auto;
   }
   *,
@@ -125,4 +151,24 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* Shade switcher smear (signature animation 4). */
+@keyframes smear {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 1;
+  }
+  45% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+.smear {
+  animation: smear 1.1s var(--ease-out) both;
+  filter: drop-shadow(0 6px 8px rgb(28 26 23 / 0.18));
 }

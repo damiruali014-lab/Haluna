@@ -1,30 +1,22 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { CartProvider } from './lib/cart'
-import { Layout } from './components/Layout'
-import Home from './pages/Home'
-import ProductPage from './pages/ProductPage'
-import Checkout from './pages/Checkout'
-import NotFound from './pages/NotFound'
+import { routes } from './routes'
 import './index.css'
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      { path: '/', element: <Home /> },
-      { path: '/product/:slug', element: <ProductPage /> },
-      { path: '/checkout', element: <Checkout /> },
-      { path: '*', element: <NotFound /> },
-    ],
-  },
-])
+const router = createBrowserRouter(routes)
 
-createRoot(document.getElementById('root')!).render(
+const app = (
   <StrictMode>
     <CartProvider>
       <RouterProvider router={router} />
     </CartProvider>
-  </StrictMode>,
+  </StrictMode>
 )
+
+// The home page ships prerendered HTML (scripts/prerender.mjs), which is hydrated in place so the
+// hero paints before JavaScript runs. Every other route starts from the empty app shell.
+const root = document.getElementById('root')!
+if (root.firstElementChild) hydrateRoot(root, app)
+else createRoot(root).render(app)

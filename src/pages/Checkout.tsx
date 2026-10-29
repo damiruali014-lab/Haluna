@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { FREE_SHIPPING_THRESHOLD, SHIPPING_FEE, formatPrice } from '../data/products'
 import { useCart, type ResolvedLine } from '../lib/cart'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
-import { ProductVisual } from '../components/ProductVisual'
+import { ProductImage } from '../components/ProductImage'
 import { FreeShippingBar } from '../components/CartDrawer'
 import { ArrowLeftIcon, CheckIcon, InfoIcon, LockIcon } from '../components/Icons'
 
@@ -66,9 +66,9 @@ export default function Checkout() {
   if (lines.length === 0) {
     return (
       <section className="container-page flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-        <h1 className="text-5xl">Your bag is empty</h1>
+        <h1 className="display text-display-l">Your bag is empty</h1>
         <p className="mt-4 text-ink-soft">Add a sunscreen or two, then come back to check out.</p>
-        <Link to="/#shop" className="btn-primary mt-8">
+        <Link to="/#shop" className="btn-ink mt-8">
           Shop sunscreens
         </Link>
       </section>
@@ -80,10 +80,10 @@ export default function Checkout() {
       <Link to="/" className="inline-flex items-center gap-2 text-sm text-ink-soft hover:text-ink">
         <ArrowLeftIcon size={16} /> Continue shopping
       </Link>
-      <h1 className="mt-4 text-4xl sm:text-5xl">Checkout</h1>
+      <h1 className="display mt-4 text-display-l">Checkout</h1>
 
-      <div role="note" className="mt-6 flex items-start gap-3 rounded-2xl border border-sun/50 bg-sun-soft px-5 py-4 text-sm">
-        <InfoIcon size={20} className="mt-0.5 shrink-0 text-sun-deep" />
+      <div role="note" className="mt-8 flex items-start gap-3 rounded-card bg-blush px-5 py-4 text-sm text-ink">
+        <InfoIcon size={20} className="mt-0.5 shrink-0" />
         <p>
           <strong className="font-semibold">Demo store: no real payment is processed.</strong> Haluna is a fictional brand.
           Please don't enter real card details; the payment fields are disabled.
@@ -138,7 +138,7 @@ export default function Checkout() {
             }
           >
             {/* Stripe-style card element, intentionally disabled: this demo never collects card data. */}
-            <div aria-disabled="true" className="rounded-2xl border border-dashed border-ink/20 bg-sand-soft/60 p-4 sm:p-5">
+            <div aria-disabled="true" className="rounded-2xl border border-dashed border-ink/20 bg-sand/60 p-4 sm:p-5">
               <p className="mb-4 text-sm text-ink-soft" id="payment-note">
                 Card payments are disabled in this demo. In a real store, a secure Stripe or Shopify payment form goes here.
               </p>
@@ -168,7 +168,7 @@ export default function Checkout() {
             </div>
           </Section>
 
-          <button type="submit" className="btn-primary w-full !py-4 text-base" disabled={submitting}>
+          <button type="submit" className="btn-ink w-full !py-4 text-base" disabled={submitting}>
             {submitting ? 'Placing order…' : `Place demo order · ${formatPrice(total)}`}
           </button>
         </form>
@@ -183,7 +183,7 @@ function Section({ title, children, aside }: { title: string; children: ReactNod
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl">{title}</h2>
+        <h2 className="display text-[2rem] leading-none">{title}</h2>
         {aside}
       </div>
       {children}
@@ -204,10 +204,10 @@ function Input({ id, label, error, type = 'text', autoComplete }: { id: Field; l
         autoComplete={autoComplete}
         aria-invalid={!!error}
         aria-describedby={error ? `co-${id}-error` : undefined}
-        className={`input ${error ? '!border-sun-deep' : ''}`}
+        className={`input ${error ? '!border-rosewood' : ''}`}
       />
       {error && (
-        <p id={`co-${id}-error`} className="mt-1.5 text-sm text-sun-deep">
+        <p id={`co-${id}-error`} className="mt-1.5 text-sm text-rosewood">
           {error}
         </p>
       )}
@@ -217,14 +217,14 @@ function Input({ id, label, error, type = 'text', autoComplete }: { id: Field; l
 
 function OrderSummary({ lines, subtotal, shipping, total }: { lines: ResolvedLine[]; subtotal: number; shipping: number; total: number }) {
   return (
-    <aside aria-label="Order summary" className="h-fit rounded-panel bg-white p-6 shadow-soft lg:sticky lg:top-28">
-      <h2 className="text-2xl">Order summary</h2>
+    <aside aria-label="Order summary" className="h-fit rounded-panel bg-sand p-6 shadow-soft lg:sticky lg:top-28">
+      <h2 className="display text-[2rem] leading-none">Order summary</h2>
       <ul className="mt-5 divide-y divide-ink/10">
         {lines.map((l) => (
           <li key={l.key} className="flex items-center gap-4 py-3">
             <div className="relative shrink-0">
-              <ProductVisual product={l.product} shade={l.shade} className="h-16 w-14 rounded-lg" />
-              <span className="absolute -top-2 -right-2 grid h-5 min-w-5 place-items-center rounded-full bg-ink px-1 text-[11px] font-semibold text-cream">
+              <div className="h-16 w-16 overflow-hidden rounded-sm bg-sand"><ProductImage product={l.product} shade={l.shade} sizes="64px" /></div>
+              <span className="absolute -top-2 -right-2 grid h-5 min-w-5 place-items-center rounded-full bg-ink px-1 text-[11px] font-semibold text-bone">
                 {l.quantity}
               </span>
             </div>
@@ -265,18 +265,18 @@ function OrderSummary({ lines, subtotal, shipping, total }: { lines: ResolvedLin
 function Confirmation({ order }: { order: Order }) {
   return (
     <section className="container-page max-w-2xl py-16 text-center sm:py-24" aria-labelledby="confirm-title">
-      <div className="mx-auto grid h-16 w-16 animate-fade-in place-items-center rounded-full bg-sage text-ink">
+      <div className="mx-auto grid h-16 w-16 animate-fade-in place-items-center rounded-full bg-blush text-ink">
         <CheckIcon size={30} />
       </div>
-      <p className="eyebrow mt-6">Order {order.number}</p>
-      <h1 id="confirm-title" className="mt-3 text-5xl">
+      <p className="label mt-6 text-ink-soft">Order {order.number}</p>
+      <h1 id="confirm-title" className="display mt-3 text-display-l">
         Thank you, {order.firstName}!
       </h1>
       <p className="mx-auto mt-4 max-w-md text-ink-soft">
         Your demo order is confirmed. In a real store, a receipt would be on its way to <strong className="text-ink">{order.email}</strong>.
       </p>
 
-      <div className="mt-10 rounded-panel bg-white p-6 text-left shadow-soft">
+      <div className="mt-10 rounded-panel bg-sand p-6 text-left shadow-soft">
         <ul className="divide-y divide-ink/10">
           {order.lines.map((l) => (
             <li key={l.key} className="flex justify-between gap-4 py-3 text-sm">
@@ -296,10 +296,10 @@ function Confirmation({ order }: { order: Order }) {
 
       <p className="mt-6 text-xs text-ink-soft">This is a demo store. No payment was taken and nothing will ship.</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Link to="/" className="btn-primary">
+        <Link to="/" className="btn-ink">
           Back to the shop
         </Link>
-        <a href="https://damiruali014-lab.github.io" target="_blank" rel="noopener" className="btn-ghost">
+        <a href="https://damiruali014-lab.github.io" target="_blank" rel="noopener" className="btn-line">
           Want a store like this?
         </a>
       </div>
