@@ -1,0 +1,128 @@
+@import 'tailwindcss';
+
+/* Brand tokens. Change these to re-skin the whole store. */
+@theme {
+  --color-cream: #fbf7f1;
+  --color-sand: #eadfcf;
+  --color-sand-soft: #f4ede3;
+  --color-sun: #f28c4b; /* primary accent: backgrounds only, pair with brown text */
+  --color-sun-deep: #a84c14; /* orange for text on light backgrounds (5.3:1) */
+  --color-sun-soft: #fbe3d2;
+  --color-ink: #2b1e16;
+  --color-ink-soft: #6b5a4e; /* secondary text (6.1:1 on cream) */
+  --color-sage: #a9b8a0;
+  --color-sage-deep: #4f6047;
+  --color-sage-soft: #e3e9dd;
+
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1.25rem;
+  --radius-panel: 1.5rem;
+
+  --shadow-soft: 0 1px 2px rgb(43 30 22 / 0.04), 0 8px 24px -8px rgb(43 30 22 / 0.1);
+  --shadow-lift: 0 2px 4px rgb(43 30 22 / 0.04), 0 20px 40px -12px rgb(43 30 22 / 0.18);
+
+  --animate-fade-in: fade-in 0.4s ease both;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-sun-deep);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-sun-soft);
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold tracking-[0.18em] text-sun-deep uppercase;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-sun text-ink shadow-soft hover:-translate-y-0.5 hover:bg-[#f49a5f] hover:shadow-lift active:translate-y-0;
+}
+@utility btn-dark {
+  @apply btn bg-ink text-cream hover:-translate-y-0.5 hover:bg-[#3d2c21] hover:shadow-lift active:translate-y-0;
+}
+@utility btn-ghost {
+  @apply btn border border-ink/15 bg-white/60 text-ink backdrop-blur hover:border-ink/40 hover:bg-white;
+}
+@utility card {
+  @apply rounded-card bg-white shadow-soft;
+}
+@utility input {
+  @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink transition placeholder:text-ink-soft/70 focus:border-sun-deep focus:ring-2 focus:ring-sun/30 focus:outline-none;
+}
+
+/* Subtle film grain used on hero and feature panels. */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.12 0 0 0 0 0.09 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Scroll reveal: elements start hidden only when JS has marked them. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
